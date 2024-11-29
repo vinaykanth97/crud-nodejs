@@ -1,0 +1,16 @@
+{
+  "name": "crud-nodejs",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --env-file=.env server.js"
+  },
+  "keywords": [],
+  "author": "Vinay",
+  "license": "ISC",
+  "description": "Just a Simple nodejs crud for learning purpose",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
