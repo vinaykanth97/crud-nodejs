@@ -21,7 +21,7 @@ export const WriteDataToFile = (data) => {
     writeFileSync(path.resolve(__dirname, 'data/products.json'), JSON.stringify(data))
 }
 
-export const GetBodyData = async (req, res) => {
+export const GetBodyData = async (req) => {
     return new Promise((resolve, reject) => {
         try {
             let bodyData = ""
