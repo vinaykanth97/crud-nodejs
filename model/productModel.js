@@ -1,11 +1,19 @@
 import { GetProductData, WriteDataToFile } from "../utils.js"
+import Product from "./productSchema.js"
 
 
 export const Create = (bodyData) => {
-    return GetProductData().then(allProductData => {
-        allProductData.push({ id: crypto.randomUUID(), ...bodyData })
-        WriteDataToFile(allProductData)
-        return allProductData
+    return new Promise(async (resolve, reject) => {
+        let getProductData = await GetProductData()
+        const product = await new Product({
+            id: crypto.randomUUID(),
+            ...bodyData
+        })
+        await product.validate().then(() => {
+            getProductData.push(product)
+            WriteDataToFile(getProductData)
+            resolve(getProductData)
+        }).catch(error => reject(error))
     })
 }
 
@@ -18,14 +26,14 @@ export const Find = (id) => {
 export const Update = (index, bodyData) => {
     return GetProductData().then(allProductData => {
         allProductData[index] = bodyData
-        // WriteDataToFile(allProductData)
+        WriteDataToFile(allProductData)
         return allProductData
     })
 }
 
 export const Remove = (id) => {
     return GetProductData().then(allProductData => {
-        let removedProduct = allProductData.filter(prod => prod.id !== id)  
+        let removedProduct = allProductData.filter(prod => prod.id !== id)
         WriteDataToFile(removedProduct)
         return removedProduct
     })
